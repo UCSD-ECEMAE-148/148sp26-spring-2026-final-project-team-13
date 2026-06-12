@@ -1,0 +1,16 @@
+camera_publisher:
+  ros__parameters:
+    topic_name: /oak/rgb/image_raw
+    fps: 30.0
+    width: 640
+    height: 400
+    frame_id: oak_rgb_camera_frame
+    anti_banding_mode: mains_60_hz
+    qos_reliability: reliable
+    qos_depth: 10
+
+# ADD THESE STEREO/DEPTH PARAMETERS TO DISABLE CPU-HEAVY FILTERS
+    i_enable_spatial_filter: false
+    i_enable_temporal_filter: false
+    i_enable_speckle_filter: false
+    i_align_depth: false     # Disable alignment to save massive CPU cycles

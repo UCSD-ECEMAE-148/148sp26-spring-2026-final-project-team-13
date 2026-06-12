@@ -1,0 +1,63 @@
+# Dockerfile for Livox LiDAR ROS2 node
+# Based on: https://github.com/tedsamu/livox-ros2-docker
+# Default to ARM64 so this builds on Jetson without qemu/binfmt emulation.
+# Override for x86_64 if needed, e.g.:
+#   docker build --build-arg ROS_BASE_IMAGE=osrf/ros:humble-desktop -f Dockerfile.lidar .
+ARG ROS_BASE_IMAGE=arm64v8/ros:humble-perception-jammy
+FROM ${ROS_BASE_IMAGE}
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Install debian packages
+# rviz2 is needed for the rviz_MID360 / rviz_HAP launch files and is
+# only included in the "desktop" base image, not "perception".
+RUN apt-get update && apt-get install -y \
+        nano \
+        sudo \
+    iproute2 \
+        ros-humble-rmw-cyclonedds-cpp \
+        ros-humble-imu-tools \
+        ros-humble-rviz2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create a non-root user
+RUN useradd -ms /bin/bash devuser \
+   && echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers \
+   && chown -R devuser:devuser /home/devuser/
+
+# Create ros workspace directories
+RUN mkdir -p /home/devuser/ros2_ws/src/ /home/devuser/livox_ws/src/ /home/devuser/.config \
+    && chown -R devuser:devuser /home/devuser/ros2_ws \
+    && chown -R devuser:devuser /home/devuser/livox_ws \
+    && chown -R devuser:devuser /home/devuser/.config
+
+# Switch to non-root user
+USER devuser
+ENV USER devuser
+WORKDIR /home/devuser/livox_ws/src
+
+RUN echo "source /opt/ros/humble/setup.bash" >> /home/devuser/.bashrc \
+    && echo "source /home/devuser/livox_ws/install/setup.bash" >> /home/devuser/.bashrc
+
+# Install Livox SDK2
+RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git \
+    && cd Livox-SDK2 && mkdir build && cd build \
+    && cmake .. && make -j$(nproc) && sudo make install \
+    && cd ../../ && rm -r Livox-SDK2
+
+# Install Livox ROS2 driver
+RUN git clone https://github.com/Livox-SDK/livox_ros_driver2.git \
+    && cd livox_ros_driver2 \
+    && bash -c "source /opt/ros/humble/setup.bash && ./build.sh humble"
+RUN echo "export LD_LIBRARY_PATH=\${LD_LIBRARY_PATH}:/usr/local/lib" >> /home/devuser/.bashrc
+
+# Use CycloneDDS as the RMW for host-container topic visibility (package already installed above)
+ENV RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+ENV ROS_DOMAIN_ID=0
+
+# Copy convenience launch scripts
+COPY ece191-ros2-livox-lidar/launch/run.sh \
+     ece191-ros2-livox-lidar/launch/pointcloud_MID360_launch.py \
+     ece191-ros2-livox-lidar/launch/record_MID360_launch.py \
+     ece191-ros2-livox-lidar/launch/record_HAP_launch.py \
+     ./

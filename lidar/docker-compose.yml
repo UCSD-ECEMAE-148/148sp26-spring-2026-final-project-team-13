@@ -1,0 +1,42 @@
+services:
+  camera:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: humble
+        ROS_BASE_IMAGE: arm64v8/ros:humble-ros-base-jammy
+    image: ece191/camera:humble
+    command: ["/bin/bash", "-lc", "/ws/run.sh"]
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DISTRO=humble
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /dev:/dev
+      - /sys:/sys:ro
+      - /run/udev:/run/udev:ro
+
+  lidar:
+    build:
+      context: .
+      dockerfile: ../camera/Dockerfile.lidar
+      args:
+        ROS_BASE_IMAGE: osrf/ros:humble-desktop
+    image: ece191/lidar:humble
+    network_mode: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - ROS_DOMAIN_ID=0
+      - RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+      - LIVOX_HOST_IP=${LIVOX_HOST_IP:-192.168.1.50}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ./ece191-ros2-livox-lidar/launch/run.sh:/home/devuser/livox_ws/src/run.sh:ro
+      - ./ece191-ros2-livox-lidar/launch/pointcloud_MID360_launch.py:/home/devuser/livox_ws/src/pointcloud_MID360_launch.py:ro

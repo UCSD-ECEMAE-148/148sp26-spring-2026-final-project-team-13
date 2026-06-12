@@ -1,0 +1,21 @@
+# docker-compose.arm64.yml — ARM64 build overrides for Jetson AGX Xavier (and other aarch64 hosts)
+#
+# Usage:
+#   docker compose -f docker-compose.yml -f docker-compose.arm64.yml build
+#   docker compose -f docker-compose.yml -f docker-compose.arm64.yml up
+#
+# This file overrides the ROS_BASE_IMAGE build argument in both services so
+# that native ARM64 images are used instead of the default x86-64 ones.
+# No emulation (QEMU/binfmt) is needed when building directly on a Jetson.
+
+services:
+  camera:
+    build:
+      args:
+        ROS_DISTRO: humble
+        ROS_BASE_IMAGE: arm64v8/ros:humble-ros-base-jammy
+
+  lidar:
+    build:
+      args:
+        ROS_BASE_IMAGE: arm64v8/ros:humble-perception-jammy

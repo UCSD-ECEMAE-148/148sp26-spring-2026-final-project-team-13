@@ -1,0 +1,29 @@
+lidar:
+  lidar_topic: /livox/lidar
+  frame_id: livox_frame
+
+camera:
+  image_topic: /oak/rgb/image_raw
+  projected_topic: /oak/rgb/projected_image
+  image_size:
+    width: 640
+    height: 480
+  frame_id: oak_rgb_camera_frame
+
+chessboard:
+  pattern_size:
+    rows: 7
+    columns: 9
+  square_size_meters: 0.024
+
+general:
+  config_folder: /ros2_ws/src/ros2_camera_lidar_fusion/config
+  data_folder: /ros2_ws/src/ros2_camera_lidar_fusion/data
+  correspondence_file: ros2_camera_lidar_fusion_correspondences.txt
+  camera_intrinsic_calibration: camera_intrinsic_calibration.yaml
+  camera_extrinsic_calibration: camera_extrinsic_calibration.yaml
+  slop: 0.1
+  max_file_saved: 20
+  keyboard_listener: True
+  get_intrinsics: True
+  get_extrinsics: True

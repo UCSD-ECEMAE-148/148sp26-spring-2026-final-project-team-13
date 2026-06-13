@@ -1,9 +1,13 @@
 
-# 🤖 Team 13 — LiDAR Integration on JeepBot & Dropoff System
+# 🤖 Team 13 - LiDAR Integration on JeepBot & Dropoff System
 ### ECE/MAE 148 · Spring 2026 · UC San Diego
- 
-> Sensor fusion pipeline combining an **OAK-D Pro** camera and **Livox MID-360 LiDAR** with YOLO-based object detection, distance estimation, and a servo-actuated autonomous dropoff mechanism — running on a **Raspberry Pi 5**.
- 
+
+ ![UCSD - Jacob School of Engineering](images/UCSDLogo_JSOE_BlueGold_Web.jpg)
+
+> Sensor fusion pipeline combining an **OAK-D Pro** camera and **Livox MID-360 LiDAR** with YOLO-based object detection, distance estimation, and a servo-actuated autonomous dropoff mechanism - running on a **Raspberry Pi 5**.
+
+![Sensorfusion showing on Foxglove](images/Sensorfusion_Foxglove.png)
+
 ---
  
 ## 📋 Table of Contents
@@ -14,25 +18,25 @@
 4. [Accomplishments](#-accomplishments)
 5. [Challenges & Lessons Learned](#-challenges--lessons-learned)
 6. [Video Demo & Photos](#-video-demo--photos)
-7. [Sensor Fusion on the JeepBot — How To](#-sensor-fusion-on-the-jeepbot--how-to)
-8. [Hardware — Dropoff System](#-hardware--dropoff-system)
+7. [Sensor Fusion on the JeepBot - How To](#-sensor-fusion-on-the-jeepbot--how-to)
+8. [Hardware - Dropoff System](#-hardware--dropoff-system)
 9. [Gantt Chart](#-gantt-chart)
 ---
  
 ## 👥 Team Members
  
-| Name | Major |
-|---|---|
+| Name | Major | Contacts | LinkedIn |
+|---|---|---|---|
 | Edgar Stalleicken | MAE |
 | Abdulmajeed Altamimi | MAE |
 | Riku Nagareda | ECE |
-| Vy Dang | CSE |
+| Vy Dang | CSE | kid002@ucsd.edu or kietdangvy@gmail.com | [LinkedIn](https://www.linkedin.com/in/kiet-vy-dang-45a419201/)
  
 ---
  
 ## 📄 Abstract
  
-Team 13 developed two interconnected systems for the JeepBot autonomous platform. The first is a **sensor fusion pipeline** that integrates the Livox MID-360 LiDAR with the OAK-D Pro camera and YOLO object detection, ported from a Jetson AGX architecture to a Raspberry Pi 5 with AI Hat. The second is a **servo-actuated autonomous dropoff mechanism** — a box that pitches via a gear-rack motor drive and releases a gate via servo, designed in SolidWorks with full mechanical validation.
+Team 13 developed two interconnected systems for the JeepBot autonomous platform. The first is a **sensor fusion pipeline** that integrates the Livox MID-360 LiDAR with the OAK-D Pro camera and YOLO object detection, ported from a Jetson AGX architecture to a Raspberry Pi 5 with AI Hat. The second is a **servo-actuated autonomous dropoff mechanism** - a box that pitches via a gear-rack motor drive and releases a gate via servo, designed in SolidWorks with full mechanical validation.
  
 ---
  
@@ -43,18 +47,18 @@ Team 13 developed two interconnected systems for the JeepBot autonomous platform
 - [x] Transfer current LiDAR progress onto the JeepBot
 - [x] Demonstrate a functional release/drop-off action with a designed pitching and latch-opening mechanism in CAD
 ### Nice-to-Haves
-- [x] Algorithm for classification based on collected LiDAR data (DONE ✅)
+- [x] Algorithm for classification based on collected LiDAR data
 - [ ] Make dropoff trigger based on LiDAR classification (e.g., human recognized → stop + drop)
 - [ ] Full obstacle avoidance
 - [ ] Optimized materials for weight and torque
 ---
  
-## ✅ Accomplishments
+## Accomplishments
  
 - **Ported the Sensor Fusion pipeline** from a CSE team's Jetson AGX to the JeepBot's Raspberry Pi 5 + AI Hat (special thanks to Jingting and Borna)
 - **Combined and launched** the Sensor Fusion node with YOLO detection for object classification, distance estimation, and confidence value output
 - **Validated the system** through live demonstrations of YOLO-based object detection with bounding boxes, labels, and distance readouts on the camera feed
-- **Designed and built** the Dropoff Mechanism — CAD documentation covers both the pitching (gear-to-gear rack) and the latch-opening (servo-actuated) mechanisms
+- **Designed and built** the Dropoff Mechanism - CAD documentation covers both the pitching (gear-to-gear rack) and the latch-opening (servo-actuated) mechanisms
 - **Collaborated** with Team 12 and DSC 190 for smooth hardware/model integration
 ### LiDAR Pipeline Details
  
@@ -69,17 +73,17 @@ Team 13 developed two interconnected systems for the JeepBot autonomous platform
  
 ---
  
-## ⚠️ Challenges & Lessons Learned
+## Challenges & Lessons Learned
  
 | Issue | How We Addressed It | Lesson |
 |---|---|---|
-| Firmware incompatibility (Jetson AGX → RPi 5) | Agentic coding + prompt engineering + architecture understanding | Platform migration is a real engineering skill — not trivial |
+| Firmware incompatibility (Jetson AGX --> RPi 5) | Agentic coding + prompt engineering + architecture understanding | Platform migration is a real engineering skill - not trivial |
 | Workflow dependencies on other teams | Shifted to alternative tasks; built in fallback planning | Start early, don't depend on upstream progress, build for the idealistic but plan for the realistic |
 | Hardware assembly blocked by missing parts | Explored makerspace tooling early; pivoted design iterations | Assess construction limitations before finalizing design |
 | Lighting variability breaking camera tracking | Shifted reliance to LiDAR + GPS for navigation | Sensor redundancy is key for robust outdoor autonomy |
  
 ### What Did Not Work
-- **Physical assembly and construction** of the Dropoff System — unforeseen parts unavailability at the DIB Makerspace, combined with time consumed debugging the sensor fusion pipeline, prevented completion of the physical build.
+- **Physical assembly and construction** of the Dropoff System - unforeseen parts unavailability at the DIB Makerspace, combined with time consumed debugging the sensor fusion pipeline, prevented completion of the physical build.
 ### If We Had Another Week
 - Implement **Forward Collision Avoidance** based on time-to-collision (TTC):
 ```python
@@ -88,12 +92,13 @@ Team 13 developed two interconnected systems for the JeepBot autonomous platform
 ```
 - Add **password or facial recognition** to the dropoff gate to prevent theft
 - Deploy **obstacle avoidance** using a sim-to-real approach with the `gpiozero` module
-- **Complete the physical Dropoff System** — wire up servo and motor per CAD documentation
+- **Complete the physical Dropoff System** - wire up servo and motor per CAD documentation
 ---
  
 ## 🎥 Video Demo & Photos
  
-> Demo videos and photos of the sensor fusion output and dropoff mechanism are included in the final presentation slides (`T13_Project_W2_V0.pptx`).
+[YouTube for Sensor Fusion demo](https://youtu.be/OATsJNGTlzQ)
+![Sensor Fusion Demo](/images/sensorfusion_demo.png)
  
 Key demonstrations:
 - Live YOLO object detection feed with bounding boxes, class labels, and distance estimates
@@ -101,9 +106,9 @@ Key demonstrations:
 - 3D motion study of the gear-rack pitching mechanism and servo-actuated latch
 ---
  
-## 🛠️ Sensor Fusion on the JeepBot — How To
+## 🛠️ Sensor Fusion on the JeepBot - How To
  
-### `sensorfusion_ws` — Sensor Fusion Workspace
+### `sensorfusion_ws` - Sensor Fusion Workspace
  
 Unified workspace for the **OAK-D Pro + Livox MID-360** sensor fusion pipeline.
 Includes a CPU-only Raspberry Pi 5 path under `fusion/docker_rpi5` for running fusion nodes without CUDA or Jetson L4T.
@@ -132,7 +137,7 @@ Connect Foxglove Studio to `ws://<pi-wifi-ip>:8765`.
 ### YOLO + Cone Detection Mode
  
 ```bash
-# MAE/ECE 148 Spring 2026 — full detection stack
+# MAE/ECE 148 Spring 2026 - full detection stack
 SENSORFUSION_DETECTION_BACKEND=cpu FUSION_MODE=detection \
   bash ~/sensorfusion_ws/shared/start_all_rpi5.sh 192.168.1.3
 ```
@@ -145,7 +150,7 @@ FUSION_MODE=detection bash ~/sensorfusion_ws/shared/stop_all_rpi5.sh 192.168.1.3
  
 ---
  
-## ⚙️ Hardware — Dropoff System
+## ⚙️ Hardware - Dropoff System
  
 ### Design Overview
  
@@ -166,7 +171,7 @@ The dropoff mechanism consists of two independently actuated subsystems:
 - [x] Pitching mechanism designed
 - [x] Servo placement and pitching gear designed
 - [x] Mechanical forces calculated
-- [ ] Physical assembly (pending — parts availability)
+- [ ] Physical assembly (pending - parts availability)
 ### Practical Applications
  
 | Civil Use | Dual-Use |
